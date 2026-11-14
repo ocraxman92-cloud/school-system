@@ -1,0 +1,102 @@
+<!doctype html>
+<html lang="so">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>School Management System</title>
+  <link rel="stylesheet" href="style.css">
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2.45.4"></script>
+</head>
+<body>
+  <section id="loginView" class="login-shell">
+    <div class="login-art">
+      <div class="brand-mark">🎓</div>
+      <h1>School Management System</h1>
+      <p>Maamul iskuulkaaga. Dhis mustaqbal wanaagsan.</p>
+      <ul>
+        <li>Maamulka ardayda iyo macallimiinta</li>
+        <li>Xaadirinta iyo fasallada</li>
+        <li>Imtixaannada iyo natiijooyinka</li>
+        <li>Warbixinno iyo tirakoob</li>
+      </ul>
+      <div class="book-stack">📚</div>
+    </div>
+    <form id="loginForm" class="login-card">
+      <div class="mini-brand">🎓</div>
+      <h2>Ku soo dhowow!</h2>
+      <p class="muted">Gal akoonkaaga iskuulka</p>
+      <label>Email</label>
+      <input id="email" type="email" placeholder="name@school.com" required>
+      <label>Password</label>
+      <input id="password" type="password" placeholder="Password-kaaga" required>
+      <button class="primary full" type="submit">→ Gal</button>
+      <p id="loginMessage" class="message"></p>
+      <p class="small muted">Akoonnada waxaa maamuluhu ka abuuraa Supabase Authentication.</p>
+    </form>
+  </section>
+
+  <section id="appView" class="app hidden">
+    <aside class="sidebar">
+      <div class="side-brand"><span>🎓</span><b>School<br>Management</b></div>
+      <nav id="nav">
+        <button class="nav-item active" data-page="dashboard">▦ <span>Dashboard</span></button>
+        <button class="nav-item" data-page="students">♟ <span>Ardayda</span></button>
+        <button class="nav-item" data-page="teachers">♟ <span>Macallimiinta</span></button>
+        <button class="nav-item" data-page="classes">▤ <span>Fasallada</span></button>
+        <button class="nav-item" data-page="attendance">◷ <span>Xaadirinta</span></button>
+        <button class="nav-item" data-page="exams">▣ <span>Imtixaannada</span></button>
+        <button class="nav-item" data-page="results">★ <span>Natiijooyinka</span></button>
+        <button class="nav-item" data-page="fees">$ <span>Lacagaha</span></button>
+        <button class="nav-item" data-page="reports">▥ <span>Warbixinnada</span></button>
+      </nav>
+      <div class="sidebar-bottom">
+        <div>“Waxbarasho wanaagsan,<br>mustaqbal ifaya.”</div>
+        <button id="logoutBtn" class="logout">↪ Ka bax</button>
+      </div>
+    </aside>
+    <main class="main">
+      <header class="topbar">
+        <button id="menuBtn" class="menu-btn">☰</button>
+        <div><b id="pageTitle">Dashboard</b><small id="today"></small></div>
+        <div class="user-chip"><span class="avatar">A</span><span><b id="userEmail">Admin</b><small id="userRole">Maamule</small></span></div>
+      </header>
+      <div class="content">
+        <section id="dashboardPage" class="page">
+          <div class="welcome">
+            <div><h1>Ku soo dhowow, <span id="welcomeName">Admin</span>!</h1><p>Halkan ka maamul hawlaha iskuulkaaga.</p></div>
+            <div class="welcome-icon">🎓</div>
+          </div>
+          <div class="stats">
+            <article class="stat"><span class="stat-icon blue">♟</span><div><small>Wadarta ardayda</small><strong id="studentCount">—</strong></div></article>
+            <article class="stat"><span class="stat-icon green">♟</span><div><small>Wadarta macallimiinta</small><strong id="teacherCount">—</strong></div></article>
+            <article class="stat"><span class="stat-icon purple">▤</span><div><small>Wadarta fasallada</small><strong id="classCount">—</strong></div></article>
+            <article class="stat"><span class="stat-icon orange">◷</span><div><small>Xaadirinta maanta</small><strong id="attendanceCount">—</strong></div></article>
+          </div>
+          <div class="panel-grid">
+            <article class="panel"><div class="panel-head"><h3>Hawlaha degdegga ah</h3></div><div class="quick-actions">
+              <button data-goto="students">＋ Diiwaangeli arday</button>
+              <button data-goto="teachers">＋ Ku dar macallin</button>
+              <button data-goto="attendance">◷ Xaadirin</button>
+              <button data-goto="results">★ Natiijooyin</button>
+            </div></article>
+            <article class="panel"><div class="panel-head"><h3>Nidaamka iskuulka</h3><span class="status">Online</span></div><p class="muted">Xogta waxaa lagu kaydiyaa database-kaaga. Hubi inaad dhamaystirtay dejinta Supabase.</p><div class="setup-note">🔐 Akoonnada iyo rukhsadaha waxaa ilaaliya Supabase.</div></article>
+          </div>
+        </section>
+
+        <section id="modulePage" class="page hidden">
+          <div class="module-heading"><div><h1 id="moduleTitle">Ardayda</h1><p id="moduleDescription">Maamul xogta</p></div><button id="addBtn" class="primary">＋ Ku dar cusub</button></div>
+          <div class="toolbar"><input id="searchInput" placeholder="Raadi xogta..."><button id="refreshBtn" class="secondary">⟳ Cusboonaysii</button></div>
+          <div id="formPanel" class="panel hidden">
+            <h3 id="formTitle">Ku dar xog</h3>
+            <form id="recordForm" class="record-form"></form>
+          </div>
+          <div class="panel table-panel"><div id="tableWrap" class="table-wrap"><p class="muted">Xogta ayaa soo muuqan doonta marka database-ka la xiro.</p></div></div>
+          <p id="moduleMessage" class="message"></p>
+        </section>
+      </div>
+    </main>
+  </section>
+  <script src="config.js"></script>
+  <script src="app.js"></script>
+</body>
+        </html>
